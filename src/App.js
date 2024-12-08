@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import logo from './images/BCI LOGO ENG FULL.jpg';
 import smalllogo from './images/BCI logo image.png';
@@ -6,7 +6,7 @@ import './App.css';
 
 let data=[
   {
-    ar:{question:'متى تم اكتشاف البولي يوريثين (PU)؟',
+    ar:{question:'متى تم اكتشاف تفاعل البولي يوريثين (PU)؟',
       options:[
         {answer:'أ. 1937', isCorrect:true},
         {answer:'ب. 1944', isCorrect:false},
@@ -118,16 +118,16 @@ let data=[
       options:[
         {answer:'أ. 10,000 طن متري', isCorrect:false},
         {answer:'ب. 17,000 طن متري', isCorrect:false},
-        {answer:'ج. 40,000 طن متري', isCorrect:false},
-        {answer:'د. 60,000 طن متري', isCorrect:true}
+        {answer:'ج. 40,000 طن متري', isCorrect:true},
+        {answer:'د. 60,000 طن متري', isCorrect:false}
       ],
     },
     en:{question:`What is BCI Arabia's annual production capacity?`,
       options:[
         {answer:'a.10,000 Mt', isCorrect:false},
         {answer:'b.17,000 Mt', isCorrect:false},
-        {answer:'c.40,000 mt', isCorrect:false},
-        {answer:'d.60,000 Mt', isCorrect:true}
+        {answer:'c.40,000 mt', isCorrect:true},
+        {answer:'d.60,000 Mt', isCorrect:false}
       ],
     }
   },
@@ -180,7 +180,7 @@ let data=[
       options:[
         {answer:'a.In process', isCorrect:false},
         {answer:'b.Eco-Friendly ', isCorrect:false},
-        {answer:'c.sustainble ', isCorrect:false},
+        {answer:'c.Sustainable ', isCorrect:false},
         {answer:'d.Eco-Friendly and Sustainable ', isCorrect:true}
       ],
     }
@@ -208,6 +208,7 @@ let data=[
 function App() {
   const [index,setIndex] = useState(0);
   const [selectedOptions,setSelectedOptions]=useState([])
+  const [selectedCorrectAnswers,setSelectedCorrectAnswers]=useState([])
   const [winner,setWinner]=useState(false)
 
   useEffect(()=>{
@@ -216,24 +217,39 @@ function App() {
         setWinner(false)
         setIndex(0)
         setSelectedOptions([])
-      },[3000])
+        setSelectedCorrectAnswers([])
+      },[5000])
     }
   },[winner])
 
-  const renderQuestion=()=>{
+  const renderQuestion=useCallback(()=>{
+    let allCorrectAnswers=[]
+
+    data[index].ar.options.forEach(element => {
+      if(element.isCorrect){allCorrectAnswers.push(element.answer)}
+    });
+    
     const select=(item,idx)=>{
+      
       if(selectedOptions.includes(idx)){return}
 
       if(item.isCorrect){
+
         setSelectedOptions([...selectedOptions,idx])
+        setSelectedCorrectAnswers([...selectedCorrectAnswers,idx])
+
         if(index==data.length-1){
           setWinner(true)
           return 
         }
-        setTimeout(() => {
-          setIndex(index+1)
-          setSelectedOptions([])
-        }, 500);
+
+        if(selectedCorrectAnswers.length+1===allCorrectAnswers.length)
+          setTimeout(() => {
+            setIndex(index+1)
+            setSelectedOptions([])
+            setSelectedCorrectAnswers([])
+          }, 500);
+
       }else{
         setSelectedOptions([...selectedOptions,idx])
       }
@@ -255,17 +271,15 @@ function App() {
           </div>
         </div>
     )
-  }
+  },[selectedCorrectAnswers,selectedOptions])
+
   if(winner)
     return (
       <div className='winner'>
         <img src={smalllogo} alt='win' />
         <div className='text'>
           <div>
-            you won
-          </div>
-          <div>
-            لقد فزت
+          Congratulats, you are a PU Champion!			
           </div>
         </div>
         <img src={smalllogo} alt='win' />
