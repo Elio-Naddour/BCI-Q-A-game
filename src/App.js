@@ -279,7 +279,7 @@ function App() {
         <img src={smalllogo} alt='win' />
         <div className='text'>
           <div>
-          Congratulation, you are a PU Champion!			
+          Congratulations, you are a PU Champion!			
           </div>
         </div>
         <img src={smalllogo} alt='win' />
