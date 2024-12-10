@@ -118,16 +118,16 @@ let data=[
       options:[
         {answer:'أ. 10,000 طن متري', isCorrect:false},
         {answer:'ب. 17,000 طن متري', isCorrect:false},
-        {answer:'ج. 40,000 طن متري', isCorrect:true},
-        {answer:'د. 60,000 طن متري', isCorrect:false}
+        {answer:'ج. 40,000 طن متري', isCorrect:false},
+        {answer:'د. 60,000 طن متري', isCorrect:true}
       ],
     },
     en:{question:`What is BCI Arabia's annual production capacity?`,
       options:[
         {answer:'a.10,000 Mt', isCorrect:false},
         {answer:'b.17,000 Mt', isCorrect:false},
-        {answer:'c.40,000 mt', isCorrect:true},
-        {answer:'d.60,000 Mt', isCorrect:false}
+        {answer:'c.40,000 mt', isCorrect:false},
+        {answer:'d.60,000 Mt', isCorrect:true}
       ],
     }
   },
